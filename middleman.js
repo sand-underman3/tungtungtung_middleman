@@ -13,11 +13,14 @@ router.get('/commandsQueued', (req, res) => {
   res.json({ message: 'Unfinished right now' });
 });
 
+router.get('/health', (req,res) => {
+   res.status(200).json({ message: 'OK' });
+})
+
 router.post('/requestFinished', (req, res) => {
   const body = req.body;
   res.json({ message: 'POST request', data: body });
   // later on, add a queue system thingy for './commandQueue.json'
-  
 });
 
 app.use('/', router);
