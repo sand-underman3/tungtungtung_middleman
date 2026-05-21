@@ -32,3 +32,5 @@ client.on('interactionCreate', async interaction => {
   const command = commands.find(c => c.definition.name === interaction.commandName);
   await command?.handler(interaction);
 });
+
+client.login(process.env.BOT_TOKEN);
