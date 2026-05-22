@@ -1,34 +1,20 @@
 // lol
 import 'dotenv/config';
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'discord.js';
+import { readdirSync } from 'fs';
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 
-const commands = [
-  {
-    definition: new SlashCommandBuilder()
-      .setName('test')
-      .setDescription('Dont worry about this one')
-      .setIntegrationTypes([0, 1]) 
-      .setContexts([0, 1, 2])
-      .addStringOption(option => option.setName('a').setDescription('Parameter a').setRequired(true))
-      .addStringOption(option => option.setName('b').setDescription('Parameter b').setRequired(true))
-      .addStringOption(option => option.setName('c').setDescription('Parameter c').setRequired(false)),
-    handler: async (interaction) => {
-      const a = interaction.options.getString('a');
-      const b = interaction.options.getString('b');
-      const c = interaction.options.getString('c');
-      await interaction.reply(`a: ${a}, b: ${b}, c: ${c}`);
-    }
-  }
-];
+const commands = await Promise.all(
+  readdirSync('./commands')
+  .filter(file => file.endsWith('.js'))
+  .map(file => import(`./commands/${file}`).then(def => def.default))
+)
 
-// split them automatically
 await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
   body: commands.map(c => c.definition.toJSON())
 });
-
 
 client.on('interactionCreate', async interaction => {
   if (!interaction.isChatInputCommand()) return;

@@ -9,6 +9,10 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+router.get('/', (req,res) => {
+  res.status(200).json({message: 'OK (but why are you here? go to the endpoints)'})
+})
+
 router.get('/commandsQueued', (req, res) => {
   res.json({ message: 'Unfinished right now' });
 });
