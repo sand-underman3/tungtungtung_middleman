@@ -18,15 +18,6 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL
-    }
-  }
-});
-
-
 const app = express();
 const router = express.Router();
 const port = process.env.PORT || 3000;
