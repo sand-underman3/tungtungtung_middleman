@@ -2,9 +2,6 @@ import { SlashCommandBuilder } from 'discord.js';
 const { default: embeds } = await import('../cmdModules/embeds.js');
 
 import { PrismaClient } from '../generated/prisma/client.js';
-const prisma = new PrismaClient({
-  datasourceUrl: process.env.DATABASE_URL
-});
 
 export default {
     definition: new SlashCommandBuilder()
@@ -30,6 +27,10 @@ export default {
       ),
 
     handler: async (interaction) => {
+        const prisma = new PrismaClient({
+          datasourceUrl: process.env.DATABASE_URL
+        });
+
         const jobId = interaction.options.getString('job_id')
         const message = interaction.options.getString('message') || 'Empty Message'
         const parameters = JSON.stringify(
