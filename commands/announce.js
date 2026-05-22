@@ -1,5 +1,4 @@
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'discord.js';
-import e from 'express';
 const { default: embeds } = await import('../cmdModules/embeds.js');
 
 export default {
@@ -36,7 +35,7 @@ export default {
             ]
         ]
 
-        const embed = embeds.createEmbed()
+        const embed = embeds.createEmbed(title, description, fields)
 
         const avatar = interaction.user.displayAvatarURL();
         embed.setThumbnail(avatar);
