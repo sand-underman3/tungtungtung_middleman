@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'discord.js';
 import e from 'express';
-const { default: embeds } = await import('./cmdModules/embeds.js');
+const { default: embeds } = await import('../cmdModules/embeds.js');
 
 export default {
     definition: new SlashCommandBuilder()
@@ -35,7 +35,7 @@ export default {
                 {name: 'Administrator', value: `User: ${interaction.user.username} (${interaction.user.displayName})`}
             ]
         ]
-        
+
         const embed = embeds.createEmbed()
 
         const avatar = interaction.user.displayAvatarURL();
