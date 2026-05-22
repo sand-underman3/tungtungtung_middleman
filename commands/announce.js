@@ -1,6 +1,9 @@
 import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'discord.js';
 const { default: embeds } = await import('../cmdModules/embeds.js');
 
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
 export default {
     definition: new SlashCommandBuilder()
       .setName('announce')
@@ -25,23 +28,40 @@ export default {
       ),
 
     handler: async (interaction) => {
+        const jobId = interaction.options.getString('job_id')
+        const message = interaction.options.getString('message') || 'Empty Message'
+        const parameters = JSON.stringify(
+          { 
+            message: message
+          }
+        )
 
-        const [title, description, fields] = [
+        const [titleMsg, description, fields] = [
             'Announcement Command Sent',
-            `Your announcement has been sent to jobId (${interaction.options.getString('job_id')})`,
+            `Your announcement has been sent.`,
             [
-                {name: 'Job Id', value: `${interaction.options.getString('job_id')}`},
-                {name: 'Administrator', value: `User: ${interaction.user.username} (${interaction.user.displayName})`}
+                {name: 'Job Id', value: `${jobId}`, inline: true},
+                {name: 'Administrator', value: `User: ${interaction.user.displayName}`, inline: true},
+                {name: 'Message', value: `${message}`}
             ]
         ]
-
-        const embed = embeds.createEmbed(title, description, fields)
+        
+        const embed = embeds.createEmbed(titleMsg || 'No Title', description || 'N/A', fields)
 
         const avatar = interaction.user.displayAvatarURL();
         embed.setThumbnail(avatar);
 
+        await prisma.command.create({
+          data: {
+            jobId: jobId,
+            title: interaction.options.getString('title') || 'Server',
+            parameters: parameters
+          }
+        });
+
         await interaction.reply({ 
             embeds: [embed],
         });
+        
     }
 }
