@@ -1,7 +1,7 @@
-import { Client, GatewayIntentBits, REST, Routes, SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
 const { default: embeds } = await import('../cmdModules/embeds.js');
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from './generated/prisma/client.js';
 const prisma = new PrismaClient();
 
 export default {

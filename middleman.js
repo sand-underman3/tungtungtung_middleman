@@ -2,7 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import './bot.js';
 
-import { PrismaClient } from './generated/prisma/client';
+import { PrismaClient } from './generated/prisma/client.js';
 
 const prisma = new PrismaClient({
   datasources: {
