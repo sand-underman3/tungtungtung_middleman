@@ -4,6 +4,16 @@ import './bot.js';
 
 import { PrismaClient } from './generated/prisma/client.js';
 
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err);
+  process.exit(1);
+});
+
 const prisma = new PrismaClient({
   datasourceUrl: process.env.DATABASE_URL
 });
