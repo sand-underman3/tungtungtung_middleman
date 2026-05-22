@@ -12,7 +12,8 @@ export default {
         .setDescription(description)
         .addFields(...fields)
         .setTimestamp()
-
+        .setColor(0xFFFFFF);
+        
         return embed
     }
 }
