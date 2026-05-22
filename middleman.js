@@ -2,7 +2,9 @@ import express from 'express';
 import 'dotenv/config';
 import './bot.js';
 
-import { PrismaClient } from '@prisma/client';
+import pkg from '@prisma/client';
+const { PrismaClient } = pkg;
+
 const prisma = new PrismaClient();
 
 const app = express();
