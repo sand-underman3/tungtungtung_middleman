@@ -1,7 +1,11 @@
 import { SlashCommandBuilder } from 'discord.js';
 const { default: embeds } = await import('../cmdModules/embeds.js');
 
-import { PrismaClient } from '../generated/prisma/client.js';
+import { PrismaClient } from './generated/prisma/client.js';
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+
+const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
 export default {
     definition: new SlashCommandBuilder()
@@ -27,14 +31,6 @@ export default {
       ),
 
     handler: async (interaction) => {
-        const prisma = new PrismaClient({
-            datasources: {
-              db: {
-                url: process.env.DATABASE_URL
-              }
-            }
-        });
-
         const jobId = interaction.options.getString('job_id')
         const message = interaction.options.getString('message') || 'Empty Message'
         const parameters = JSON.stringify(
