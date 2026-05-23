@@ -7,14 +7,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 const sand = '584493443032547373'
 
-import { PrismaClient } from './generated/prisma/client.js';
-import { PrismaPg } from '@prisma/adapter-pg';
-
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL,
-});
-
-const prisma = new PrismaClient({ adapter });
+import { prisma } from './prisma.js';
 
 const commands = await Promise.all(
   readdirSync('./commands')
