@@ -20,6 +20,7 @@ await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
 });
 
 client.on('interactionCreate', async interaction => {
+  await interaction.deferReply();
 
   if (!interaction.isChatInputCommand()) return;
   if (interaction.user.id !== sand) {
@@ -32,7 +33,7 @@ client.on('interactionCreate', async interaction => {
       return;
     }
   }
-
+  
   const command = commands.find(c => c.definition.name === interaction.commandName);
   await command?.handler(interaction);
 });
