@@ -5,6 +5,18 @@ import './bot.js';
 import { PrismaClient } from './generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 
+console.log('Starting...');
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err);
+  process.exit(1);
+});
+
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
 });
@@ -54,4 +66,7 @@ router.post('/requestFinished', async (req, res) => {
 });
 
 app.use('/', router);
-app.listen(port);
+
+app.listen(port,()=>{
+  console.log("Running")
+});
