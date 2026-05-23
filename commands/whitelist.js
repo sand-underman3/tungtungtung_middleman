@@ -39,7 +39,7 @@ export default {
         const avatar = interaction.client.user.displayAvatarURL();
         embed.setThumbnail(avatar);
 
-        await interaction.reply({
+        await interaction.editReply({
           content: "<a:universeprocess:1507566530160754749> **Rearranging the Universe..**",
         })
 
