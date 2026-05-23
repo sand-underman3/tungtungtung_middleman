@@ -17,6 +17,9 @@ await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
 });
 
 client.on('interactionCreate', async interaction => {
+
+  const isWhitelisted = await prisma.whitelistedUser.findUnique({where: {id: interaction.user.id}});
+
   if (!interaction.isChatInputCommand()) return;
   const command = commands.find(c => c.definition.name === interaction.commandName);
   await command?.handler(interaction);
