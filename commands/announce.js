@@ -64,7 +64,7 @@ export default {
           });
         }  catch (err) {
           console.error('Prisma error:', err);
-          await interaction.editReply({ content: 'Something went wrong.' });
+          await interaction.editReply({ content: `Something went wrong. \n\`\`\`Err ${err}\`\`\`` });
           return;
         }
 
