@@ -5,7 +5,7 @@ import { readdirSync } from 'fs';
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
-const sand = 584493443032547373
+const sand = '584493443032547373'
 
 import { PrismaClient } from './generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';

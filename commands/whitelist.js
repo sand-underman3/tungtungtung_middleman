@@ -10,7 +10,7 @@ const adapter = new PrismaPg({
 
 const prisma = new PrismaClient({ adapter });
 
-const sand = 584493443032547373
+const sand = '584493443032547373'
 
 export default {
     definition: new SlashCommandBuilder()
@@ -50,9 +50,10 @@ export default {
           content: "<a:universeprocess:1507566530160754749> **Rearranging the Universe..**",
         })
 
-        await prisma.user.create({
-          data: { id: userId },
-          skipDuplicates: true
+        await prisma.user.upsert({
+          where: { id: userId },
+          update: {},
+          create: { id: userId }
         });
 
         await interaction.editReply({ 
