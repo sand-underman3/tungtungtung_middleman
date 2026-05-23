@@ -34,6 +34,7 @@ export default {
       ),
 
     handler: async (interaction) => {
+        console.log('loading announce')
         const jobId = interaction.options.getString('job_id')
         const message = interaction.options.getString('message') || 'Empty Message'
         const parameters = JSON.stringify(
@@ -56,7 +57,7 @@ export default {
 
         const avatar = interaction.user.displayAvatarURL();
         embed.setThumbnail(avatar);
-        
+        console.log('Sent deferred')
         await interaction.reply({
           content: "<a:universeprocess:1507566530160754749> **Rearranging the Universe..**",
         })
@@ -68,7 +69,7 @@ export default {
             parameters: parameters
           }
         });
-
+        console.log('Entry created')
         await interaction.editReply({ 
             embeds: [embed],
         });

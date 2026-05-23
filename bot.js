@@ -18,8 +18,11 @@ await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
 });
 
 client.on('interactionCreate', async interaction => {
+  if (!interaction.isChatInputCommand()) return;
+  console.log("Cmd Received")
   if (interaction.user.id !== sand) {
     const isWhitelisted = await prisma.whitelistedUser.findUnique({where: {id: interaction.user.id}});
+    console.log(isWhitelisted)
     if (!isWhitelisted) {
       interaction.reply({
         content: 'Unauthorized',
@@ -28,8 +31,7 @@ client.on('interactionCreate', async interaction => {
       return;
     }
   }
-
-  if (!interaction.isChatInputCommand()) return;
+  console.log("Passed Check")
   const command = commands.find(c => c.definition.name === interaction.commandName);
   await command?.handler(interaction);
 });
