@@ -62,14 +62,20 @@ export default {
           content: "<a:universeprocess:1507566530160754749> **Rearranging the Universe..**",
         })
 
-        await prisma.command.create({
-          data: {
+        try {
+          await prisma.command.create({
+            data: {
             jobId: jobId,
             title: interaction.options.getString('title') || 'Server',
             parameters: parameters
-          }
-        });
-        console.log('Entry created')
+            }
+          });
+        }  catch (err) {
+          console.error('Prisma error:', err);
+          await interaction.editReply({ content: 'Something went wrong.' });
+          return;
+        }
+        
         await interaction.editReply({ 
             embeds: [embed],
         });
