@@ -26,14 +26,14 @@ client.on('interactionCreate', async interaction => {
   if (interaction.user.id !== sand) {
     const isWhitelisted = await prisma.user.findUnique({where: {id: interaction.user.id}});
     if (!isWhitelisted) {
-      interaction.reply({
+      interaction.editReply({
         content: 'Unauthorized',
         ephemeral: true
       })
       return;
     }
   }
-  
+
   const command = commands.find(c => c.definition.name === interaction.commandName);
   await command?.handler(interaction);
 });
