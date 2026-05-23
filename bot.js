@@ -5,6 +5,7 @@ import { readdirSync } from 'fs';
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
+const sand = 584493443032547373
 
 const commands = await Promise.all(
   readdirSync('./commands')
@@ -17,8 +18,16 @@ await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
 });
 
 client.on('interactionCreate', async interaction => {
-
-  const isWhitelisted = await prisma.whitelistedUser.findUnique({where: {id: interaction.user.id}});
+  if (interaction.user.id !== sand) {
+    const isWhitelisted = await prisma.whitelistedUser.findUnique({where: {id: interaction.user.id}});
+    if (!isWhitelisted) {
+      interaction.reply({
+        content: 'Unauthorized',
+        ephemeral: true
+      })
+      return;
+    }
+  }
 
   if (!interaction.isChatInputCommand()) return;
   const command = commands.find(c => c.definition.name === interaction.commandName);

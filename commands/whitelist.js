@@ -1,10 +1,13 @@
 import { SlashCommandBuilder } from 'discord.js';
 const { default: embeds } = await import('../cmdModules/embeds.js');
 
-import { PrismaClient } from '../generated/prisma/client.js';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaClient } from './generated/prisma/client.js';
+import { PrismaPg } from '@prisma/adapter-pg';
 
-const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL });
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+});
+
 const prisma = new PrismaClient({ adapter });
 
 const sand = 584493443032547373
