@@ -28,7 +28,6 @@ client.on('interactionCreate', async interaction => {
     if (!isWhitelisted) {
       interaction.editReply({
         content: 'Unauthorized',
-        ephemeral: true
       })
       return;
     }
